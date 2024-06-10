@@ -15,7 +15,7 @@ namespace WindowsFormsApp1
 
         public float Direction; // направление движения
         public float Speed; // скорость перемещения
-
+        public float Life; // запас здоровья частицы
         // добавили генератор случайных чисел
         public static Random rand = new Random();
 
@@ -26,6 +26,7 @@ namespace WindowsFormsApp1
             Direction = rand.Next(360);
             Speed = 1 + rand.Next(10);
             Radius = 2 + rand.Next(10);
+            Life = 20 + rand.Next(100); // Добавили исходный запас здоровья от 20 до 120
         }
         public void Draw(Graphics g)
         {
