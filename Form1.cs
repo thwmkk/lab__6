@@ -34,9 +34,27 @@ namespace WindowsFormsApp1
         {
             foreach (var particle in particles)
             {
-                var directionInRadians = particle.Direction / 180 * Math.PI;
-                particle.X += (float)(particle.Speed * Math.Cos(directionInRadians));
-                particle.Y -= (float)(particle.Speed * Math.Sin(directionInRadians));
+                particle.Life -= 1; // уменьшаю здоровье
+                                    // если здоровье кончилось
+                if (particle.Life < 0)
+                {
+                    // восстанавливаю здоровье
+                    particle.Life = 20 + Particle.rand.Next(100);
+                    // перемещаю частицу в центр
+                    particle.X = picDisplay.Image.Width / 2;
+                    particle.Y = picDisplay.Image.Height / 2;
+                    // делаю рандомное направление, скорость и размер
+                    particle.Direction = Particle.rand.Next(360);
+                    particle.Speed = 1 + Particle.rand.Next(10);
+                    particle.Radius = 2 + Particle.rand.Next(10);
+                }
+                else
+                {
+                    // а это наш старый код
+                    var directionInRadians = particle.Direction / 180 * Math.PI;
+                    particle.X += (float)(particle.Speed * Math.Cos(directionInRadians));
+                    particle.Y -= (float)(particle.Speed * Math.Sin(directionInRadians));
+                }
             }
         }
 
