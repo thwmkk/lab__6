@@ -10,6 +10,7 @@ namespace WindowsFormsApp1
 {
     internal class Emitter
     {
+        public List<Point> gravityPoints = new List<Point>(); // тут буду хранится точки притяжения
         List<Particle> particles = new List<Particle>();
         public int MousePositionX;
         public int MousePositionY;
@@ -84,11 +85,22 @@ namespace WindowsFormsApp1
 
         public void Render(Graphics g)
         {
-            // ну тут так и быть уж сам впишу...
-            // это то же самое что на форме в методе Render
+            // это не трогаем
             foreach (var particle in particles)
             {
                 particle.Draw(g);
+            }
+
+            // рисую точки притяжения красными кружочками
+            foreach (var point in gravityPoints)
+            {
+                g.FillEllipse(
+                    new SolidBrush(Color.Red),
+                    point.X - 5,
+                    point.Y - 5,
+                    10,
+                    10
+                );
             }
         }
     }
