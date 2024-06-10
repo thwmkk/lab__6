@@ -10,7 +10,7 @@ namespace WindowsFormsApp1
 {
     internal class Emitter
     {
-        public List<Point> gravityPoints = new List<Point>(); // тут буду хранится точки притяжения
+        public List<IImpactPoint> impactPoints = new List<IImpactPoint>(); // <<< ТАК ВОТ
         List<Particle> particles = new List<Particle>();
         public int MousePositionX;
         public int MousePositionY;
