@@ -51,15 +51,9 @@ namespace WindowsFormsApp1
                 else
                 {
                     // каждая точка по-своему воздействует на вектор скорости
-                    foreach (var point in gravityPoints)
+                    foreach (var point in impactPoints)
                     {
-                        float gX = point.X - particle.X;
-                        float gY = point.Y - particle.Y;
-                        float r2 = (float)Math.Max(100, gX * gX + gY * gY); // ограничил
-                        float M = 100;
-
-                        particle.SpeedX += (gX) * M / r2;
-                        particle.SpeedY += (gY) * M / r2;
+                        point.ImpactParticle(particle);
                     }
 
                     // это не трогаем
@@ -93,15 +87,15 @@ namespace WindowsFormsApp1
 
         public void Render(Graphics g)
         {
-            // это не трогаем
+            // не трогаем
             foreach (var particle in particles)
             {
                 particle.Draw(g);
             }
 
-            // рисую точки притяжения красными кружочками
-            foreach (var point in gravityPoints)
+            foreach (var point in impactPoints) // тут теперь  impactPoints
             {
+                /* это больше не надо
                 g.FillEllipse(
                     new SolidBrush(Color.Red),
                     point.X - 5,
@@ -109,6 +103,8 @@ namespace WindowsFormsApp1
                     10,
                     10
                 );
+                */
+                point.Render(g); // это добавили
             }
         }
     }
