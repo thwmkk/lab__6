@@ -15,7 +15,7 @@ namespace WindowsFormsApp1
         public int MousePositionX;
         public int MousePositionY;
         public float GravitationX = 0;
-        public float GravitationY = 1; // пусть гравитация будет силой один пиксель за такт, нам хватит
+        public float GravitationY = 0; // пусть гравитация будет силой один пиксель за такт, нам хватит
 
         public void UpdateState()
         {
@@ -50,14 +50,23 @@ namespace WindowsFormsApp1
                 }
                 else
                 {
-                    /* это все убираем, тут у нас старый пересчет положения частицы в пространстве 
-                    var directionInRadians = particle.Direction / 180 * Math.PI;
-                    particle.X += (float)(particle.Speed * Math.Cos(directionInRadians));
-                    particle.Y -= (float)(particle.Speed * Math.Sin(directionInRadians));
-                    */
+                    // сделаем сначала для одной точки
+                    // и так считаем вектор притяжения к точке
+                    float gX = gravityPoints[0].X - particle.X;
+                    float gY = gravityPoints[0].Y - particle.Y;
 
-                    // и добавляем новый, собственно он даже проще становится, 
-                    // так как теперь мы храним вектор скорости в явном виде и его не надо пересчитывать
+                    // считаем квадрат расстояния между частицей и точкой r^2
+                    float r2 = gX * gX + gY * gY;
+                    float M = 100; // сила притяжения к точке, пусть 100 будет
+
+                    // пересчитываем вектор скорости с учетом притяжения к точке
+                    particle.SpeedX += (gX) * M / r2;
+                    particle.SpeedY += (gY) * M / r2;
+
+                    // а это старый код, его не трогаем
+                    particle.SpeedX += GravitationX;
+                    particle.SpeedY += GravitationY;
+
                     particle.X += particle.SpeedX;
                     particle.Y += particle.SpeedY;
                 }

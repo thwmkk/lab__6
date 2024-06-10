@@ -20,7 +20,11 @@ namespace WindowsFormsApp1
             InitializeComponent();
             picDisplay.Image = new Bitmap(picDisplay.Width, picDisplay.Height);
 
-            }
+            // добавил точечку
+            emitter.gravityPoints.Add(new Point(
+                picDisplay.Width / 2, picDisplay.Height / 2
+            ));
+        }
 
 
 
