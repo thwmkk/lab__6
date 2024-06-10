@@ -13,6 +13,8 @@ namespace WindowsFormsApp1
         List<Particle> particles = new List<Particle>();
         public int MousePositionX;
         public int MousePositionY;
+        public float GravitationX = 0;
+        public float GravitationY = 1; // пусть гравитация будет силой один пиксель за такт, нам хватит
 
         public void UpdateState()
         {
@@ -35,9 +37,12 @@ namespace WindowsFormsApp1
                     var direction = (double)Particle.rand.Next(360);
                     var speed = 1 + Particle.rand.Next(10);
 
-                    particle.SpeedX = (float)(Math.Cos(direction / 180 * Math.PI) * speed);
-                    particle.SpeedY = -(float)(Math.Sin(direction / 180 * Math.PI) * speed);
-                    /* конец ЭТО ДОБАВЛЯЮ  */
+                    particle.SpeedX += GravitationX;
+                    particle.SpeedY += GravitationY;
+
+                    // это не трогаем
+                    particle.X += particle.SpeedX;
+                    particle.Y += particle.SpeedY;
 
                     // это не трогаем
                     particle.Radius = 2 + Particle.rand.Next(10);
