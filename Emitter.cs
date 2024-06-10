@@ -50,26 +50,25 @@ namespace WindowsFormsApp1
                 }
                 else
                 {
-                    // сделаем сначала для одной точки
-                    // и так считаем вектор притяжения к точке
-                    float gX = gravityPoints[0].X - particle.X;
-                    float gY = gravityPoints[0].Y - particle.Y;
+                    // каждая точка по-своему воздействует на вектор скорости
+                    foreach (var point in gravityPoints)
+                    {
+                        float gX = point.X - particle.X;
+                        float gY = point.Y - particle.Y;
+                        float r2 = (float)Math.Max(100, gX * gX + gY * gY); // ограничил
+                        float M = 100;
 
-                    // считаем квадрат расстояния между частицей и точкой r^2
-                    float r2 = gX * gX + gY * gY;
-                    float M = 100; // сила притяжения к точке, пусть 100 будет
+                        particle.SpeedX += (gX) * M / r2;
+                        particle.SpeedY += (gY) * M / r2;
+                    }
 
-                    // пересчитываем вектор скорости с учетом притяжения к точке
-                    particle.SpeedX += (gX) * M / r2;
-                    particle.SpeedY += (gY) * M / r2;
-
-                    // а это старый код, его не трогаем
+                    // это не трогаем
                     particle.SpeedX += GravitationX;
                     particle.SpeedY += GravitationY;
 
                     particle.X += particle.SpeedX;
                     particle.Y += particle.SpeedY;
-                }
+            }
             }
             for (var i = 0; i < 10; ++i)
             {
