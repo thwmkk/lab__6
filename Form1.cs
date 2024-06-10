@@ -19,17 +19,8 @@ namespace WindowsFormsApp1
             InitializeComponent();
             picDisplay.Image = new Bitmap(picDisplay.Width, picDisplay.Height);
 
-            // генерирую 500 частиц
-            for (var i = 0; i < 500; ++i)
-            {
-                var particle = new Particle();
-                // переношу частицы в центр изображения
-                particle.X = picDisplay.Image.Width / 2;
-                particle.Y = picDisplay.Image.Height / 2;
-                // добавляю список
-                particles.Add(particle);
             }
-        }
+
         private void UpdateState()
         {
             foreach (var particle in particles)
@@ -47,6 +38,10 @@ namespace WindowsFormsApp1
                     particle.Direction = Particle.rand.Next(360);
                     particle.Speed = 1 + Particle.rand.Next(10);
                     particle.Radius = 2 + Particle.rand.Next(10);
+                    particle.Life = 20 + Particle.rand.Next(100); // это не трогаем
+                    // новое начальное расположение частицы — это то, куда указывает курсор
+                    particle.X = MousePositionX;
+                    particle.Y = MousePositionY;
                 }
                 else
                 {
@@ -54,6 +49,20 @@ namespace WindowsFormsApp1
                     var directionInRadians = particle.Direction / 180 * Math.PI;
                     particle.X += (float)(particle.Speed * Math.Cos(directionInRadians));
                     particle.Y -= (float)(particle.Speed * Math.Sin(directionInRadians));
+                }
+            }
+            for (var i = 0; i < 10; ++i)
+            {
+                if (particles.Count < 500) // пока частиц меньше 500 генерируем новые
+                {
+                    var particle = new Particle();
+                    particle.X = MousePositionX;
+                    particle.Y = MousePositionY;
+                    particles.Add(particle);
+                }
+                else
+                {
+                    break; // а если частиц уже 500 штук, то ничего не генерирую
                 }
             }
         }
