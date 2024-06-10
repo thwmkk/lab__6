@@ -36,9 +36,9 @@
             // 
             // picDisplay
             // 
-            this.picDisplay.Location = new System.Drawing.Point(12, 12);
+            this.picDisplay.Location = new System.Drawing.Point(2, 3);
             this.picDisplay.Name = "picDisplay";
-            this.picDisplay.Size = new System.Drawing.Size(776, 414);
+            this.picDisplay.Size = new System.Drawing.Size(797, 433);
             this.picDisplay.TabIndex = 0;
             this.picDisplay.TabStop = false;
             this.picDisplay.MouseMove += new System.Windows.Forms.MouseEventHandler(this.picDisplay_MouseMove);
