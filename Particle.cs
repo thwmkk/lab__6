@@ -13,8 +13,8 @@ namespace WindowsFormsApp1
         public float X; // X координата положения частицы в пространстве
         public float Y; // Y координата положения частицы в пространстве
 
-        public float Direction; // направление движения
-        public float Speed; // скорость перемещения
+        public float SpeedX; // скорость перемещения по оси X
+        public float SpeedY; // скорость перемещения по оси Y
         public float Life; // запас здоровья частицы
         // добавили генератор случайных чисел
         public static Random rand = new Random();

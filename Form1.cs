@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static WindowsFormsApp1.Particle;
 
 namespace WindowsFormsApp1
 {
@@ -53,16 +54,20 @@ namespace WindowsFormsApp1
             }
             for (var i = 0; i < 10; ++i)
             {
-                if (particles.Count < 500) // пока частиц меньше 500 генерируем новые
+                if (particles.Count < 500)
                 {
-                    var particle = new Particle();
+                    // а у тут уже наш новый класс используем
+                    var particle = new ParticleColorful();
+                    // ну и цвета меняем
+                    particle.FromColor = Color.Yellow;
+                    particle.ToColor = Color.FromArgb(0, Color.Magenta);
                     particle.X = MousePositionX;
                     particle.Y = MousePositionY;
                     particles.Add(particle);
                 }
                 else
                 {
-                    break; // а если частиц уже 500 штук, то ничего не генерирую
+                    break;
                 }
             }
         }
@@ -84,8 +89,8 @@ namespace WindowsFormsApp1
 
             using (var g = Graphics.FromImage(picDisplay.Image))
             {
-                g.Clear(Color.White);
-                Render(g); // рендерим систему
+                g.Clear(Color.Black); // А ЕЩЕ ЧЕРНЫЙ ФОН СДЕЛАЮ
+                Render(g);
             }
 
             picDisplay.Invalidate();
