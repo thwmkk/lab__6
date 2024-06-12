@@ -17,6 +17,8 @@ namespace WindowsFormsApp1
         public float GravitationX = 0;
         public float GravitationY = 0; // пусть гравитация будет силой один пиксель за такт, нам хватит
         public int ParticlesCount = 500;
+        public int Radius;
+        public int Length;
         public int X; // координата X центра эмиттера, будем ее использовать вместо MousePositionX
         public int Y; // соответствующая координата Y 
         public int Direction = 0; // вектор направления в градусах куда сыпет эмиттер
