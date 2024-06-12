@@ -115,11 +115,6 @@ namespace WindowsFormsApp1
             picDisplay.Invalidate();
         }
 
-        private void picDisplay_MouseMove(object sender, MouseEventArgs e)
-        {
-            // Нет необходимости в этом методе, так как мы не используем MousePositionX и MousePositionY
-        }
-
         private void theDirection_Scroll(object sender, EventArgs e)
         {
             wingAngle = theDirection.Value;

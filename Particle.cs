@@ -98,13 +98,7 @@ namespace WindowsFormsApp1
             // базовый класс для отрисовки точечки
             public void Render(Graphics g)
             {
-                g.FillEllipse(
-                        new SolidBrush(Color.Red),
-                        X - 5,
-                        Y - 5,
-                        10,
-                        10
-                    );
+          
             }
         }
         public class GravityPoint : IImpactPoint
