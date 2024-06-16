@@ -14,9 +14,9 @@ namespace WindowsFormsApp1
 {
     public partial class Form1 : Form
     {
-        private Emitter bodyEmitter, wingEmitter, headEmitter, heartEmitter;
+        private Emitter bodyEmitter, wingLeftEmitter, wingRightEmitter, headEmitter, heartEmitter, tailEmitter;
+        private bool showBody = false, showWings = false, showHead = false, showHeart = false, showTail = true;
         private int wingAngle = 0;
-        private bool showBody = true, showWings = true, showHead = true, showHeart = true;
         List<Emitter> emitters = new List<Emitter>();
 
         public Form1()
@@ -26,9 +26,11 @@ namespace WindowsFormsApp1
 
             // Создание эмиттеров
             bodyEmitter = CreateEmitter(picDisplay.Width / 2, picDisplay.Height / 2 - 50, Color.Gold, 0);
-            wingEmitter = CreateLineEmitter(picDisplay.Width / 2, picDisplay.Height / 2, 100, Color.LightBlue, Color.LightBlue);
+            wingLeftEmitter = CreateLineEmitter(picDisplay.Width / 2 -70, picDisplay.Height / 2 ,Color.LightBlue, Color.LightBlue);
+            wingRightEmitter = CreateLineEmitter(picDisplay.Width / 2+70, picDisplay.Height / 2, Color.LightBlue, Color.LightBlue);
             headEmitter = CreateEmitter(picDisplay.Width / 2, picDisplay.Height / 2, Color.Gold, -120);
             heartEmitter = CreateEmitter(picDisplay.Width / 2 + 20, picDisplay.Height / 2, Color.Red, -10);
+            tailEmitter = CreateTriangleEmitter(picDisplay.Width / 2, picDisplay.Height / 2 + 80, Color.Red, -10);
             bodyEmitter.impactPoints.Add(new GravityPoint
             {
                 Power = (int)Math.Pow((bodyEmitter.SpeedMax + bodyEmitter.SpeedMin) / 2, 2),
@@ -47,12 +49,33 @@ namespace WindowsFormsApp1
                 X = heartEmitter.X,
                 Y = heartEmitter.Y + 2,
             });
+
+
             // Добавление эмиттеров в список
+            
+            emitters.Add(wingLeftEmitter);
+            emitters.Add(wingRightEmitter);
             emitters.Add(bodyEmitter);
-            emitters.Add(wingEmitter);
             emitters.Add(headEmitter);
             emitters.Add(heartEmitter);
+            emitters.Add(tailEmitter);
         }
+        private Emitter CreateTriangleEmitter(int x, int y, Color color, int offset)
+        {
+            return new Emitter
+            {
+                GravitationY = 0,
+                Direction = 270, // направление вверх
+                Spreading = 45, // немного разбрасываю частицы, чтобы было треугольник
+                SpeedMin = 1,
+                SpeedMax = 10,
+                ColorFrom = color,
+                X = x,
+                Y = y + offset,
+                ParticlesPerTick = 5
+            };
+        }
+
 
         private Emitter CreateEmitter(int x, int y, Color color,int offset)
         {
@@ -69,22 +92,25 @@ namespace WindowsFormsApp1
                 Y = y + offset, // y поднят вверх на offset
             };
         }
-        private Emitter CreateLineEmitter(int x, int y, int length, Color colorFrom, Color colorTo)
+
+        private Emitter CreateLineEmitter(int x, int y, Color colorFrom, Color colorTo)
         {
             return new Emitter
             {
                 X = x,
                 Y = y,
-                Direction = -90,
+                Direction = 0,
                 Spreading = 10,
                 SpeedMin = 5,
-                SpeedMax = 15,
+                SpeedMax = 5,
                 ColorFrom = colorFrom,
                 ColorTo = colorTo,
                 ParticlesPerTick = 3,
                 impactPoints = { }
             };
         }
+
+       
 
         private void timer1_Tick(object sender, EventArgs e)
         {
@@ -101,18 +127,24 @@ namespace WindowsFormsApp1
                     bodyEmitter.Render(g);
                 if (showWings)
                 {
-                    wingEmitter.Direction = -wingAngle;
-                    wingEmitter.Render(g);
-                    wingEmitter.Direction = wingAngle;
-                    wingEmitter.Render(g);
+                    wingLeftEmitter.Direction = wingAngle - 140;
+                    wingLeftEmitter.Render(g);
+                    wingRightEmitter.Direction = wingAngle - 40;
+                    wingRightEmitter.Render(g);
                 }
                 if (showHead)
                     headEmitter.Render(g);
                 if (showHeart)
                     heartEmitter.Render(g);
+                if (showTail)
+                    tailEmitter.Render(g);
             }
 
             picDisplay.Invalidate();
+        }
+         private void checkBox5_CheckedChanged(object sender, EventArgs e)
+        {
+            showTail = checkBox5.Checked;
         }
 
         private void theDirection_Scroll(object sender, EventArgs e)
